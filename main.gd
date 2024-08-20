@@ -1,6 +1,6 @@
 extends Control
 
-@export var count = 10
+@export_range(2, 200, 1) var count = 10
 @export_range(0, 2, 0.01) var speed = 0.5
 @export var bar_scene: PackedScene
 @export var sorter: Sorter
@@ -39,7 +39,6 @@ func swap_bars(first: int, second: int, fast = false):
 		second_bar.modulate = Color.RED
 		var first_pos = first_bar.position.x
 		var second_pos = second_bar.position.x
-		print(first_pos, ", ", second_pos)
 
 		var tween = get_tree().create_tween()
 		tween.parallel().tween_property(first_bar, "position:x", second_pos, speed)
@@ -47,6 +46,7 @@ func swap_bars(first: int, second: int, fast = false):
 		await tween.finished
 		first_bar.modulate = Color.WHITE
 		second_bar.modulate = Color.WHITE
+
 	%Bars.move_child(first_bar, second)
 	%Bars.move_child(second_bar, first)
 
@@ -54,7 +54,7 @@ func swap_bars(first: int, second: int, fast = false):
 
 func shuffle_bars():
 	randomize()
-	for i in count * 100:
+	for i in count * 10:
 		%Bars.move_child(%Bars.get_child(randi_range(0, count - 1)), randi_range(0, count - 1))
 
 
