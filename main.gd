@@ -1,7 +1,9 @@
 extends Control
 
-@export var count = 5
+@export var count = 10
+@export_range(0, 2, 0.01) var speed = 0.5
 @export var bar_scene: PackedScene
+@export var sorter: Sorter
 
 var max_size: int
 
@@ -20,27 +22,31 @@ func _ready() -> void:
 		%Bars.add_child(new_bar)
 		new_bar.custom_minimum_size.y = height * max_size
 
+	await get_tree().process_frame
 	shuffle_bars()
-	#await swap_bars(2, 4)
-	#await swap_bars(1, 3)
-	#await swap_bars(1, 0)
+	sorter.sort()
 
 func swap_bars(first: int, second: int, fast = false):
-	await get_tree().process_frame
+
 
 	var first_bar = %Bars.get_child(first)
 	var second_bar = %Bars.get_child(second)
 
-	if !fast:
+	if fast:
+		await get_tree().process_frame
+	else:
+		first_bar.modulate = Color.RED
+		second_bar.modulate = Color.RED
 		var first_pos = first_bar.position.x
 		var second_pos = second_bar.position.x
 		print(first_pos, ", ", second_pos)
 
-		var tween = get_tree().create_tween().set_trans(Tween.TRANS_CIRC)
-		tween.parallel().tween_property(first_bar, "position:x", second_pos, 0.5)
-		tween.parallel().tween_property(second_bar, "position:x", first_pos, 0.5)
+		var tween = get_tree().create_tween()
+		tween.parallel().tween_property(first_bar, "position:x", second_pos, speed)
+		tween.parallel().tween_property(second_bar, "position:x", first_pos, speed)
 		await tween.finished
-
+		first_bar.modulate = Color.WHITE
+		second_bar.modulate = Color.WHITE
 	%Bars.move_child(first_bar, second)
 	%Bars.move_child(second_bar, first)
 
@@ -48,9 +54,15 @@ func swap_bars(first: int, second: int, fast = false):
 
 func shuffle_bars():
 	randomize()
-	for i in count * 10:
-		%Bars.move_child(%Bars.get_child(randi_range(0, count)), randi_range(0, count))
+	for i in count * 100:
+		%Bars.move_child(%Bars.get_child(randi_range(0, count - 1)), randi_range(0, count - 1))
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
-		print(event.global_position)
+
+func sorted() -> bool:
+	var smallest = 0
+	for i in %Bars.get_children():
+		if smallest > i.custom_minimum_size.y:
+			return false
+		else:
+			smallest = i.custom_minimum_size.y
+	return true
