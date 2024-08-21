@@ -41,8 +41,9 @@ theme_override_constants/separation = 50
 
 [node name="UI" type="HBoxContainer" parent="MarginContainer/VBoxContainer" node_paths=PackedStringArray("buttons_to_disable")]
 layout_mode = 2
+theme_override_constants/separation = 25
 script = ExtResource("3_8a123")
-buttons_to_disable = [NodePath("Shuffle"), NodePath("Sort")]
+buttons_to_disable = [NodePath("Shuffle"), NodePath("Sort"), NodePath("Bars/BarsSlide"), NodePath("Bars/BarsNum")]
 
 [node name="Shuffle" type="Button" parent="MarginContainer/VBoxContainer/UI"]
 layout_mode = 2
@@ -55,14 +56,30 @@ text = "Sort"
 [node name="Options" type="OptionButton" parent="MarginContainer/VBoxContainer/UI"]
 unique_name_in_owner = true
 layout_mode = 2
-selected = 0
+
+[node name="Bars" type="HBoxContainer" parent="MarginContainer/VBoxContainer/UI"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/UI/Bars"]
+layout_mode = 2
+text = "Bars"
+
+[node name="BarsSlide" type="HSlider" parent="MarginContainer/VBoxContainer/UI/Bars"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 2.0
+max_value = 200.0
+value = 2.0
+
+[node name="BarsNum" type="SpinBox" parent="MarginContainer/VBoxContainer/UI/Bars"]
+layout_mode = 2
+min_value = 2.0
+max_value = 200.0
+value = 2.0
 
 [node name="Bars" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Bar" parent="MarginContainer/VBoxContainer/Bars" instance=ExtResource("2_kwv4r")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -88,6 +105,9 @@ script = ExtResource("7_xxu3s")
 [node name="OddEven" type="Node" parent="Sorters"]
 script = ExtResource("8_m7avv")
 
+[connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Shuffle" to="MarginContainer/VBoxContainer/UI" method="_on_shuffle_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Sort" to="MarginContainer/VBoxContainer/UI" method="_on_sort_pressed"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/UI/Options" to="MarginContainer/VBoxContainer/UI" method="_on_options_item_selected"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/UI/Bars/BarsSlide" to="MarginContainer/VBoxContainer/UI" method="_on_bars_slide_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/UI/Bars/BarsNum" to="MarginContainer/VBoxContainer/UI" method="_on_bars_num_value_changed"]
