@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ddlioyu0by21h"]
+[gd_scene load_steps=11 format=3 uid="uid://ddlioyu0by21h"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ki6lu"]
 [ext_resource type="PackedScene" uid="uid://d2xo0hstp1qty" path="res://bar.tscn" id="2_kwv4r"]
 [ext_resource type="Script" path="res://ui.gd" id="3_8a123"]
 [ext_resource type="Script" path="res://bubble.gd" id="3_h415j"]
+[ext_resource type="AudioStream" uid="uid://dekr6mv6jhya5" path="res://boop.wav" id="3_pj8wv"]
 [ext_resource type="Script" path="res://selection.gd" id="4_ggfls"]
 [ext_resource type="Script" path="res://cocktail.gd" id="5_pv835"]
 [ext_resource type="Script" path="res://bogo.gd" id="6_gv1u3"]
@@ -22,6 +23,10 @@ count = 100
 speed = 0.0
 bar_scene = ExtResource("2_kwv4r")
 sorter = NodePath("Sorters/Selection")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pj8wv")
+volume_db = -7.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -129,7 +134,6 @@ script = ExtResource("7_xxu3s")
 [node name="OddEven" type="Node" parent="Sorters"]
 script = ExtResource("8_m7avv")
 
-[connection signal="resized" from="." to="." method="_on_resized"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Shuffle" to="MarginContainer/VBoxContainer/UI" method="_on_shuffle_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Sort" to="MarginContainer/VBoxContainer/UI" method="_on_sort_pressed"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/UI/Options" to="MarginContainer/VBoxContainer/UI" method="_on_options_item_selected"]

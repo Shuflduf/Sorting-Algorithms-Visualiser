@@ -3,6 +3,8 @@ extends Control
 signal sort_started
 signal sorted
 
+@onready var audio: AudioStreamPlayer = $AudioStreamPlayer
+
 @export_range(2, 200, 1) var count = 10
 @export_range(0, 2, 0.01) var speed = 0.5
 @export var bar_scene: PackedScene
@@ -46,12 +48,16 @@ func swap_bars(first: int, second: int, fast = false):
 
 	var first_bar = %Bars.get_child(first)
 	var second_bar = %Bars.get_child(second)
+	var p = (1 / (float(first_bar.custom_minimum_size.y) / float(count))) + 0.1
+	$AudioStreamPlayer.pitch_scale = p
+	$AudioStreamPlayer.play()
+	first_bar.modulate = Color.RED
+	second_bar.modulate = Color.RED
 
 	if fast or speed <= 0.01:
 		await get_tree().process_frame
 	else:
-		first_bar.modulate = Color.RED
-		second_bar.modulate = Color.RED
+
 		var first_pos = first_bar.position.x
 		var second_pos = second_bar.position.x
 
@@ -59,8 +65,9 @@ func swap_bars(first: int, second: int, fast = false):
 		tween.parallel().tween_property(first_bar, "position:x", second_pos, speed)
 		tween.parallel().tween_property(second_bar, "position:x", first_pos, speed)
 		await tween.finished
-		first_bar.modulate = Color.WHITE
-		second_bar.modulate = Color.WHITE
+
+	first_bar.modulate = Color.WHITE
+	second_bar.modulate = Color.WHITE
 
 	%Bars.move_child(first_bar, second)
 	%Bars.move_child(second_bar, first)
