@@ -1,12 +1,21 @@
 extends HBoxContainer
 
 @onready var options: OptionButton = %Options
-
 @export var buttons_to_disable: Array[Control]
+
+var time = 0.0:
+	set(value):
+		time = value
+		$Timer.text = str(value).pad_decimals(2)
+var counting = false
 
 func populate_options():
 	for i in %Sorters.get_children():
 		options.add_item(i.name)
+
+func _process(delta: float) -> void:
+	if counting:
+		time += delta
 
 func _ready() -> void:
 	populate_options()
@@ -17,6 +26,7 @@ func _ready() -> void:
 	owner.sorted.connect(enable_buttons)
 
 func enable_buttons():
+	counting = false
 	for i in buttons_to_disable:
 		if i is Button:
 			i.disabled = false
@@ -24,6 +34,8 @@ func enable_buttons():
 			i.editable = true
 
 func disable_buttons():
+	time = 0
+	counting = true
 	for i in buttons_to_disable:
 		if i is Button:
 			i.disabled = true

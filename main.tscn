@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ddlioyu0by21h"]
+[gd_scene load_steps=12 format=3 uid="uid://ddlioyu0by21h"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ki6lu"]
 [ext_resource type="PackedScene" uid="uid://d2xo0hstp1qty" path="res://bar.tscn" id="2_kwv4r"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://bogo.gd" id="6_gv1u3"]
 [ext_resource type="Script" path="res://gnome.gd" id="7_xxu3s"]
 [ext_resource type="Script" path="res://odd_even.gd" id="8_m7avv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skmka"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="Control" type="Control" node_paths=PackedStringArray("sorter")]
 layout_mode = 3
@@ -61,6 +64,7 @@ text = "Sort"
 [node name="Options" type="OptionButton" parent="MarginContainer/VBoxContainer/UI"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Ranked from fastest to slowest"
 
 [node name="Bars" type="HBoxContainer" parent="MarginContainer/VBoxContainer/UI"]
 layout_mode = 2
@@ -75,13 +79,13 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 4
 min_value = 2.0
-max_value = 200.0
+max_value = 400.0
 value = 2.0
 
 [node name="BarsNum" type="SpinBox" parent="MarginContainer/VBoxContainer/UI/Bars"]
 layout_mode = 2
 min_value = 2.0
-max_value = 200.0
+max_value = 400.0
 value = 2.0
 
 [node name="Speed" type="HBoxContainer" parent="MarginContainer/VBoxContainer/UI"]
@@ -107,6 +111,10 @@ max_value = 5.0
 step = 0.01
 value = 0.5
 
+[node name="Timer" type="Label" parent="MarginContainer/VBoxContainer/UI"]
+layout_mode = 2
+text = "0.00"
+
 [node name="Bars" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -116,23 +124,35 @@ theme_override_constants/separation = 0
 [node name="Sorters" type="Node" parent="."]
 unique_name_in_owner = true
 
-[node name="Bubble" type="Node" parent="Sorters"]
-script = ExtResource("3_h415j")
-
 [node name="Selection" type="Node" parent="Sorters"]
 script = ExtResource("4_ggfls")
 
 [node name="Cocktail" type="Node" parent="Sorters"]
 script = ExtResource("5_pv835")
 
-[node name="Bogo" type="Node" parent="Sorters"]
-script = ExtResource("6_gv1u3")
-
 [node name="Gnome" type="Node" parent="Sorters"]
 script = ExtResource("7_xxu3s")
 
 [node name="OddEven" type="Node" parent="Sorters"]
 script = ExtResource("8_m7avv")
+
+[node name="Bubble" type="Node" parent="Sorters"]
+script = ExtResource("3_h415j")
+
+[node name="Bogo" type="Node" parent="Sorters"]
+script = ExtResource("6_gv1u3")
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_skmka")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Shuffle" to="MarginContainer/VBoxContainer/UI" method="_on_shuffle_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Sort" to="MarginContainer/VBoxContainer/UI" method="_on_sort_pressed"]
