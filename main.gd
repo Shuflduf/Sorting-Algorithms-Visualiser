@@ -87,5 +87,16 @@ func is_sorted() -> bool:
 			return false
 		else:
 			smallest = i.custom_minimum_size.y
-	sorted.emit()
+	whooooOOOOOOOO()
 	return true
+
+func whooooOOOOOOOO():
+	sorted.emit()
+	for i in %Bars.get_children():
+		i.modulate = Color.GREEN
+		var p = (float(i.custom_minimum_size.y) / float(count))
+		$AudioStreamPlayer.pitch_scale = p
+		$AudioStreamPlayer.play()
+		await get_tree().process_frame
+	for i in %Bars.get_children():
+		i.modulate = Color.WHITE
