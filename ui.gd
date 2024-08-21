@@ -12,6 +12,7 @@ func _ready() -> void:
 	populate_options()
 	_on_options_item_selected(0)
 	%BarsSlide.value = owner.count
+	%SpeedSlide.value = owner.speed
 	owner.sort_started.connect(disable_buttons)
 	owner.sorted.connect(enable_buttons)
 
@@ -49,3 +50,12 @@ func _on_bars_slide_value_changed(value: float) -> void:
 
 func _on_bars_num_value_changed(value: float) -> void:
 	%BarsSlide.value = value
+
+
+func _on_speed_slide_value_changed(value: float) -> void:
+	owner.speed = value
+	$Speed/SpeedNum.value = value
+
+
+func _on_speed_num_value_changed(value: float) -> void:
+	%SpeedSlide.value = value

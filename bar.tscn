@@ -2,6 +2,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5l33w"]
 bg_color = Color(1, 1, 1, 1)
+border_blend = true
 
 [node name="Panel" type="Panel"]
 size_flags_horizontal = 3
