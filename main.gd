@@ -32,7 +32,7 @@ func swap_bars(first: int, second: int, fast = false):
 	var first_bar = %Bars.get_child(first)
 	var second_bar = %Bars.get_child(second)
 
-	if fast:
+	if fast or speed <= 0.01:
 		await get_tree().process_frame
 	else:
 		first_bar.modulate = Color.RED

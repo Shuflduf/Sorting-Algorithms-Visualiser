@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddlioyu0by21h"]
+[gd_scene load_steps=6 format=3 uid="uid://ddlioyu0by21h"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ki6lu"]
 [ext_resource type="PackedScene" uid="uid://d2xo0hstp1qty" path="res://bar.tscn" id="2_kwv4r"]
 [ext_resource type="Script" path="res://bubble.gd" id="3_h415j"]
 [ext_resource type="Script" path="res://selection.gd" id="4_ggfls"]
+[ext_resource type="Script" path="res://cocktail.gd" id="5_pv835"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("sorter")]
 layout_mode = 3
@@ -13,10 +14,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ki6lu")
-count = 50
-speed = 0.02
+count = 100
+speed = 0.0
 bar_scene = ExtResource("2_kwv4r")
-sorter = NodePath("Sorters/Selection")
+sorter = NodePath("Sorters/Cocktail")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -46,3 +47,6 @@ script = ExtResource("3_h415j")
 
 [node name="Selection" type="Node" parent="Sorters"]
 script = ExtResource("4_ggfls")
+
+[node name="Cocktail" type="Node" parent="Sorters"]
+script = ExtResource("5_pv835")
