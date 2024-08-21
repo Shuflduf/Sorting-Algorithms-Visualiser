@@ -4,7 +4,7 @@ extends Sorter
 func sort():
 	var swapped = false
 
-	while !owner.sorted():
+	while !owner.is_sorted():
 		var c = %Bars.get_child_count() - (1 if !swapped else 0)
 		var c_range = range(1, c)
 

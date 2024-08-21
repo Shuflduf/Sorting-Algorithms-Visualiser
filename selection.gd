@@ -3,7 +3,7 @@ extends Sorter
 
 func sort():
 	var checked = 0
-	while !owner.sorted():
+	while !owner.is_sorted():
 
 		var smallest: Panel = null
 

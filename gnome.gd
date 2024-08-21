@@ -3,7 +3,7 @@ extends Sorter
 
 func sort():
 	var pos = 0
-	while !owner.sorted():
+	while !owner.is_sorted():
 		#await get_tree().process_frame
 		#for i in %Bars.get_child_count() - 1:
 		var bar = %Bars.get_child(pos)

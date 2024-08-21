@@ -1,5 +1,8 @@
 extends Control
 
+signal sort_started
+signal sorted
+
 @export_range(2, 200, 1) var count = 10
 @export_range(0, 2, 0.01) var speed = 0.5
 @export var bar_scene: PackedScene
@@ -24,6 +27,10 @@ func _ready() -> void:
 
 	await get_tree().process_frame
 	shuffle_bars()
+	#so
+
+func sort():
+	sort_started.emit()
 	sorter.sort()
 
 func swap_bars(first: int, second: int, fast = false):
@@ -58,11 +65,12 @@ func shuffle_bars():
 		%Bars.move_child(%Bars.get_child(randi_range(0, count - 1)), randi_range(0, count - 1))
 
 
-func sorted() -> bool:
+func is_sorted() -> bool:
 	var smallest = 0
 	for i in %Bars.get_children():
 		if smallest > i.custom_minimum_size.y:
 			return false
 		else:
 			smallest = i.custom_minimum_size.y
+	sorted.emit()
 	return true
