@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddlioyu0by21h"]
+[gd_scene load_steps=9 format=3 uid="uid://ddlioyu0by21h"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ki6lu"]
 [ext_resource type="PackedScene" uid="uid://d2xo0hstp1qty" path="res://bar.tscn" id="2_kwv4r"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://cocktail.gd" id="5_pv835"]
 [ext_resource type="Script" path="res://bogo.gd" id="6_gv1u3"]
 [ext_resource type="Script" path="res://gnome.gd" id="7_xxu3s"]
+[ext_resource type="Script" path="res://odd_even.gd" id="8_m7avv"]
 
 [node name="Control" type="Control" node_paths=PackedStringArray("sorter")]
 layout_mode = 3
@@ -19,7 +20,7 @@ script = ExtResource("1_ki6lu")
 count = 100
 speed = 0.0
 bar_scene = ExtResource("2_kwv4r")
-sorter = NodePath("Sorters/Gnome")
+sorter = NodePath("Sorters/OddEven")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -58,3 +59,6 @@ script = ExtResource("6_gv1u3")
 
 [node name="Gnome" type="Node" parent="Sorters"]
 script = ExtResource("7_xxu3s")
+
+[node name="OddEven" type="Node" parent="Sorters"]
+script = ExtResource("8_m7avv")
