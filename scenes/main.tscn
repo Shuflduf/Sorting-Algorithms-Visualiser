@@ -1,15 +1,15 @@
 [gd_scene load_steps=12 format=3 uid="uid://ddlioyu0by21h"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_ki6lu"]
-[ext_resource type="PackedScene" uid="uid://d2xo0hstp1qty" path="res://bar.tscn" id="2_kwv4r"]
-[ext_resource type="Script" path="res://ui.gd" id="3_8a123"]
-[ext_resource type="Script" path="res://bubble.gd" id="3_h415j"]
-[ext_resource type="AudioStream" uid="uid://dekr6mv6jhya5" path="res://boop.wav" id="3_pj8wv"]
-[ext_resource type="Script" path="res://selection.gd" id="4_ggfls"]
-[ext_resource type="Script" path="res://cocktail.gd" id="5_pv835"]
-[ext_resource type="Script" path="res://bogo.gd" id="6_gv1u3"]
-[ext_resource type="Script" path="res://gnome.gd" id="7_xxu3s"]
-[ext_resource type="Script" path="res://odd_even.gd" id="8_m7avv"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_s6gim"]
+[ext_resource type="PackedScene" uid="uid://d2xo0hstp1qty" path="res://scenes/bar.tscn" id="2_pcdov"]
+[ext_resource type="AudioStream" uid="uid://dekr6mv6jhya5" path="res://boop.wav" id="3_uc1jx"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="4_il6x4"]
+[ext_resource type="Script" path="res://scripts/algorithms/selection.gd" id="5_hovp1"]
+[ext_resource type="Script" path="res://scripts/algorithms/cocktail.gd" id="6_rpkig"]
+[ext_resource type="Script" path="res://scripts/algorithms/gnome.gd" id="7_261pt"]
+[ext_resource type="Script" path="res://scripts/algorithms/odd_even.gd" id="8_sdlr2"]
+[ext_resource type="Script" path="res://scripts/algorithms/bubble.gd" id="9_8lxqi"]
+[ext_resource type="Script" path="res://scripts/algorithms/bogo.gd" id="10_md0sc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skmka"]
 bg_color = Color(1, 1, 1, 1)
@@ -21,14 +21,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ki6lu")
+script = ExtResource("1_s6gim")
 count = 100
 speed = 0.0
-bar_scene = ExtResource("2_kwv4r")
+bar_scene = ExtResource("2_pcdov")
 sorter = NodePath("Sorters/Selection")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_pj8wv")
+stream = ExtResource("3_uc1jx")
 volume_db = -7.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -49,8 +49,9 @@ theme_override_constants/separation = 50
 
 [node name="UI" type="HBoxContainer" parent="MarginContainer/VBoxContainer" node_paths=PackedStringArray("buttons_to_disable")]
 layout_mode = 2
-theme_override_constants/separation = 25
-script = ExtResource("3_8a123")
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("4_il6x4")
 buttons_to_disable = [NodePath("Shuffle"), NodePath("Sort"), NodePath("Bars/BarsSlide"), NodePath("Bars/BarsNum")]
 
 [node name="Shuffle" type="Button" parent="MarginContainer/VBoxContainer/UI"]
@@ -79,13 +80,13 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 4
 min_value = 2.0
-max_value = 400.0
+max_value = 1000.0
 value = 2.0
 
 [node name="BarsNum" type="SpinBox" parent="MarginContainer/VBoxContainer/UI/Bars"]
 layout_mode = 2
 min_value = 2.0
-max_value = 400.0
+max_value = 1000.0
 value = 2.0
 
 [node name="Speed" type="HBoxContainer" parent="MarginContainer/VBoxContainer/UI"]
@@ -113,34 +114,18 @@ value = 0.5
 
 [node name="Timer" type="Label" parent="MarginContainer/VBoxContainer/UI"]
 layout_mode = 2
-text = "0.00"
+text = "00.00"
+
+[node name="Reset" type="Button" parent="MarginContainer/VBoxContainer/UI"]
+layout_mode = 2
+tooltip_text = "Note: This button is cursed and will sometimes just delete everything. If this happens, keep pressing it."
+text = "Reset Scene"
 
 [node name="Bars" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
-
-[node name="Sorters" type="Node" parent="."]
-unique_name_in_owner = true
-
-[node name="Selection" type="Node" parent="Sorters"]
-script = ExtResource("4_ggfls")
-
-[node name="Cocktail" type="Node" parent="Sorters"]
-script = ExtResource("5_pv835")
-
-[node name="Gnome" type="Node" parent="Sorters"]
-script = ExtResource("7_xxu3s")
-
-[node name="OddEven" type="Node" parent="Sorters"]
-script = ExtResource("8_m7avv")
-
-[node name="Bubble" type="Node" parent="Sorters"]
-script = ExtResource("3_h415j")
-
-[node name="Bogo" type="Node" parent="Sorters"]
-script = ExtResource("6_gv1u3")
 
 [node name="Panel" type="Panel" parent="."]
 modulate = Color(0, 0, 0, 1)
@@ -154,6 +139,27 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_skmka")
 
+[node name="Sorters" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Selection" type="Node" parent="Sorters"]
+script = ExtResource("5_hovp1")
+
+[node name="Cocktail" type="Node" parent="Sorters"]
+script = ExtResource("6_rpkig")
+
+[node name="Gnome" type="Node" parent="Sorters"]
+script = ExtResource("7_261pt")
+
+[node name="OddEven" type="Node" parent="Sorters"]
+script = ExtResource("8_sdlr2")
+
+[node name="Bubble" type="Node" parent="Sorters"]
+script = ExtResource("9_8lxqi")
+
+[node name="Bogo" type="Node" parent="Sorters"]
+script = ExtResource("10_md0sc")
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Shuffle" to="MarginContainer/VBoxContainer/UI" method="_on_shuffle_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Sort" to="MarginContainer/VBoxContainer/UI" method="_on_sort_pressed"]
 [connection signal="item_selected" from="MarginContainer/VBoxContainer/UI/Options" to="MarginContainer/VBoxContainer/UI" method="_on_options_item_selected"]
@@ -161,3 +167,4 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_skmka")
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/UI/Bars/BarsNum" to="MarginContainer/VBoxContainer/UI" method="_on_bars_num_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/UI/Speed/SpeedSlide" to="MarginContainer/VBoxContainer/UI" method="_on_speed_slide_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/UI/Speed/SpeedNum" to="MarginContainer/VBoxContainer/UI" method="_on_speed_num_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/UI/Reset" to="MarginContainer/VBoxContainer/UI" method="_on_reset_pressed"]

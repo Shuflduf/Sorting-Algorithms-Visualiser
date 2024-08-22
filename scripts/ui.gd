@@ -6,7 +6,7 @@ extends HBoxContainer
 var time = 0.0:
 	set(value):
 		time = value
-		$Timer.text = str(value).pad_decimals(2)
+		$Timer.text = str(value).pad_decimals(2).pad_zeros(2)
 var counting = false
 
 func populate_options():
@@ -71,3 +71,8 @@ func _on_speed_slide_value_changed(value: float) -> void:
 
 func _on_speed_num_value_changed(value: float) -> void:
 	%SpeedSlide.value = value
+
+
+func _on_reset_pressed() -> void:
+	get_tree().root.add_child(load(owner.scene_file_path).instantiate())
+	owner.queue_free()
