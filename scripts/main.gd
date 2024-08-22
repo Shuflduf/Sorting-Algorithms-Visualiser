@@ -12,6 +12,7 @@ signal sorted
 
 var max_size: int
 
+
 func get_max_size() -> int:
 	var temp_bar: Panel = bar_scene.instantiate()
 	temp_bar.size_flags_vertical = Control.SIZE_FILL
@@ -22,7 +23,7 @@ func get_max_size() -> int:
 	print(m)
 	return m
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	max_size = await get_max_size()
 	populate_bars()
@@ -44,8 +45,6 @@ func sort():
 	sorter.sort()
 
 func swap_bars(first: int, second: int, fast = false):
-
-
 	var first_bar = %Bars.get_child(first)
 	var second_bar = %Bars.get_child(second)
 	var p = (1 / (float(first_bar.custom_minimum_size.y) / float(count))) + 0.1
@@ -71,7 +70,6 @@ func swap_bars(first: int, second: int, fast = false):
 
 	%Bars.move_child(first_bar, second)
 	%Bars.move_child(second_bar, first)
-
 	return
 
 func shuffle_bars():
