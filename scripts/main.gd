@@ -48,8 +48,8 @@ func swap_bars(first: int, second: int, fast = false):
 	var first_bar = %Bars.get_child(first)
 	var second_bar = %Bars.get_child(second)
 	var p = (1 / (float(first_bar.custom_minimum_size.y) / float(count))) + 0.1
-	$AudioStreamPlayer.pitch_scale = p
-	$AudioStreamPlayer.play()
+	audio.play()
+	audio.pitch_scale = p
 	first_bar.modulate = Color.RED
 	second_bar.modulate = Color.RED
 
@@ -93,8 +93,8 @@ func whooooOOOOOOOO():
 	for i in %Bars.get_children():
 		i.modulate = Color.GREEN
 		var p = (float(i.custom_minimum_size.y) / float(count))
-		$AudioStreamPlayer.pitch_scale = p
-		$AudioStreamPlayer.play()
+		audio.play()
+		audio.pitch_scale = p
 		await get_tree().process_frame
 	for i in %Bars.get_children():
 		i.modulate = Color.WHITE
